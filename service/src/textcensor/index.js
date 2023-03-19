@@ -1,11 +1,11 @@
 const fs = require('fs')
 const paths = require('path')
-const path = paths.join(__dirname, 'keywords')
+const path = paths.join('../../', 'keywords')
 
 const map = {}
 
 const lineReader = require('readline').createInterface({
-  input: require('fs').createReadStream(path, { encoding: 'UTF-8' }),
+  input: fs.createReadStream(path, { encoding: 'UTF-8' }),
 })
 
 lineReader.on('line', (line) => {

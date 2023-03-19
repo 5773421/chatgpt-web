@@ -51,15 +51,15 @@ watch(
 </script>
 
 <template>
-  <div class="min-h-full dark:bg-[#24272e] transition-all bg-gray-100" :class="[isMobile ? 'p-0' : 'p-0']">
-    <div class="min-h-full overflow-hidden" :class="getMobileClass">
+  <div class="h-full dark:bg-[#24272e] transition-all bg-gray-100" :class="[isMobile ? 'p-0' : 'p-0']">
+    <div class="h-full overflow-hidden" :class="getMobileClass">
       <NLayout class="z-40 transition" :class="getContainerClass">
         <NLayoutHeader class="p-4 absolute subpixel-antialiased bg-white z-50 w-full font-black text-3xl font-sans bg-opacity-60">
           AI 沾沾
           <span class="text-2xl">{{ getTitle }}</span>
         </NLayoutHeader>
         <!-- <Sider /> -->
-        <NLayoutContent class="min-h-full pt-16">
+        <NLayoutContent class="h-full pt-16">
           <RouterView v-slot="{ Component, route }">
             <component :is="Component" :key="route.fullPath" />
           </RouterView>

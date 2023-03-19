@@ -57,10 +57,10 @@ function handlePress(event: KeyboardEvent) {
       <div class="space-y-4">
         <header class="space-y-2">
           <h2 class="text-2xl font-bold text-center text-slate-800 dark:text-neutral-200">
-            403
+            密钥验证
           </h2>
           <p class="text-base text-center text-slate-500 dark:text-slate-500">
-            {{ $t('common.unauthorizedTips') }}
+            由于网站公开与公网内，key有被扫到造成了key泄漏，余额多次被盗刷完，所以加一层密码验证，密码可能随时更换(持续免费在公共号更新，防止key泄漏)，扫码关注公众号免费获取密码
           </p>
           <Icon403 class="w-[200px] m-auto" />
         </header>

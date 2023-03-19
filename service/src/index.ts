@@ -3,10 +3,9 @@ import type { ChatContext, ChatMessage } from './chatgpt'
 import { chatConfig, chatReplyProcess, currentModel } from './chatgpt'
 import { auth } from './middleware/auth'
 import { isNotEmptyString } from './utils/is'
-
+import tc from './textcensor/index'
 const app = express()
 const router = express.Router()
-
 app.use(express.static('public'))
 app.use(express.json())
 
@@ -23,10 +22,19 @@ router.post('/chat-process', auth, async (req, res) => {
   try {
     const { prompt, options = {} } = req.body as { prompt: string; options?: ChatContext }
     let firstChunk = true
-    await chatReplyProcess(prompt, options, (chat: ChatMessage) => {
-      res.write(firstChunk ? JSON.stringify(chat) : `\n${JSON.stringify(chat)}`)
-      firstChunk = false
+    let isErr = false
+    tc.filter(prompt, (err: any, censored) => {
+      isErr = err
     })
+    if (isErr) {
+      res.write('有敏感词, 请检查后重新输入')
+    }
+    else {
+      await chatReplyProcess(prompt, options, (chat: ChatMessage) => {
+        res.write(firstChunk ? JSON.stringify(chat) : `\n${JSON.stringify(chat)}`)
+        firstChunk = false
+      })
+    }
   }
   catch (error) {
     res.write(JSON.stringify(error))

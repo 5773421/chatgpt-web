@@ -2,15 +2,20 @@ import type { App } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import { setupPageGuard } from './permission'
-import { ChatLayout } from '@/views/chat/layout'
+import { ChatLayout } from '@/views/layout'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'Root',
     component: ChatLayout,
-    redirect: '/chat',
+    redirect: '/manifest',
     children: [
+      {
+        path: '/manifest',
+        name: 'Manifest',
+        component: () => import('@/views/manifest/Manifest.vue'),
+      },
       {
         path: '/chat/:uuid?',
         name: 'Chat',

@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { NAutoComplete, NButton, NInput, useDialog, useMessage } from 'naive-ui'
 import html2canvas from 'html2canvas'
@@ -15,6 +15,7 @@ import { useBasicLayout } from '@/hooks/useBasicLayout'
 import { useChatStore, usePromptStore } from '@/store'
 import { fetchChatAPIProcess } from '@/api'
 import { t } from '@/locales'
+import { featureCongis } from '@/config/config'
 
 let controller = new AbortController()
 
@@ -23,7 +24,7 @@ const openLongReply = import.meta.env.VITE_GLOB_OPEN_LONG_REPLY === 'true'
 const route = useRoute()
 const dialog = useDialog()
 const ms = useMessage()
-
+const router = useRouter()
 const chatStore = useChatStore()
 
 useCopyCode()
@@ -34,13 +35,10 @@ const { scrollRef, scrollToBottom } = useScroll()
 const { usingContext, toggleUsingContext } = useUsingContext()
 
 const { uuid } = route.params as { uuid: string }
-
 const dataSources = computed(() => chatStore.getChatByUuid(+uuid))
 const conversationList = computed(() => dataSources.value.filter(item => (!item.inversion && !item.error)))
-
 const prompt = ref<string>('')
 const loading = ref<boolean>(false)
-
 // 添加PromptStore
 const promptStore = usePromptStore()
 // 使用storeToRefs，保证store修改后，联想部分能够重新渲染
@@ -49,6 +47,8 @@ const { promptList: promptTemplate } = storeToRefs<any>(promptStore)
 function handleSubmit() {
   onConversation()
 }
+if (!dataSources.value?.length)
+  chatStore.addHistory({ title: 'New Chat', uuid: +uuid, isEdit: false })
 
 async function onConversation() {
   let message = prompt.value
@@ -77,11 +77,11 @@ async function onConversation() {
   loading.value = true
   prompt.value = ''
 
-  let options: Chat.ConversationRequest = {}
+  let options: Chat.ConversationRequest = { systemMessage: featureCongis?.[+uuid - 1]?.systemMessage }
   const lastContext = conversationList.value[conversationList.value.length - 1]?.conversationOptions
 
   if (lastContext && usingContext.value)
-    options = { ...lastContext }
+    options = { ...lastContext, systemMessage: featureCongis?.[+uuid - 1]?.systemMessage }
 
   addChat(
     +uuid,
@@ -348,6 +348,10 @@ function handleExport() {
   })
 }
 
+function handleGoBack() {
+  router.replace({ name: 'Manifest' })
+}
+
 function handleDelete(index: number) {
   if (loading.value)
     return
@@ -472,6 +476,9 @@ onUnmounted(() => {
           class="w-full max-w-screen-xl m-auto dark:bg-[#101014]"
           :class="[isMobile ? 'p-2' : 'p-4']"
         >
+          <NButton v-if="!isMobile" @click="handleGoBack">
+            返回列表
+          </NButton>
           <template v-if="!dataSources.length">
             <div class="flex items-center justify-center mt-4 text-center text-neutral-300">
               <SvgIcon icon="ri:bubble-chart-fill" class="mr-2 text-3xl" />
@@ -507,11 +514,13 @@ onUnmounted(() => {
     <footer :class="footerClass">
       <div class="w-full max-w-screen-xl m-auto">
         <div class="flex items-center justify-between space-x-2">
-          <HoverButton @click="handleClear">
-            <span class="text-xl text-[#4f555e] dark:text-white">
-              <SvgIcon icon="ri:delete-bin-line" />
-            </span>
-          </HoverButton>
+          <NPopover trigger="hover">
+            <HoverButton @click="handleClear">
+              <span class="text-xl text-[#4f555e] dark:text-white">
+                <SvgIcon icon="ri:delete-bin-line" />
+              </span>
+            </HoverButton>
+          </NPopover>
           <HoverButton v-if="!isMobile" @click="handleExport">
             <span class="text-xl text-[#4f555e] dark:text-white">
               <SvgIcon icon="ri:download-2-line" />

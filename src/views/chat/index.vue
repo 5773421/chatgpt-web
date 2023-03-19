@@ -458,7 +458,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col w-full min-h-full">
+  <div class="flex flex-col w-full h-full">
     <HeaderComponent
       v-if="isMobile"
       :using-context="usingContext"
@@ -469,7 +469,7 @@ onUnmounted(() => {
       <div
         id="scrollRef"
         ref="scrollRef"
-        class="min-h-full overflow-hidden overflow-y-auto"
+        class="h-full overflow-hidden overflow-y-auto"
       >
         <div
           id="image-wrapper"

@@ -27,7 +27,7 @@ router.post('/chat-process', auth, async (req, res) => {
       isErr = err
     })
     if (isErr) {
-      res.write(JSON.stringify('有敏感词, 请检查后重新输入'))
+      res.write(JSON.stringify({ text: '有敏感词, 请检查后重新输入' }))
       res.end()
     }
     else {

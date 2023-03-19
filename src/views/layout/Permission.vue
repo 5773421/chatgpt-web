@@ -60,7 +60,7 @@ function handlePress(event: KeyboardEvent) {
             密钥验证
           </h2>
           <p class="text-base text-center text-slate-500 dark:text-slate-500">
-            由于网站公开与公网内，key有被扫到造成了key泄漏，余额多次被盗刷完，所以加一层密码验证，密码可能随时更换(持续免费在公共号更新，防止key泄漏)，扫码关注公众号免费获取密码
+            由于网站公开于公网内，key有被扫到造成了key泄漏，余额多次被盗刷完，所以加一层密码验证，密码可能随时更换(如更换会在公众号更新，防止key泄漏)，扫码关注公众号获取密码，已增加敏感词过滤，请遵守法律法规，生成内容供参考，不代表我的立场。
           </p>
           <Icon403 class="w-[200px] m-auto" />
         </header>

@@ -42,7 +42,7 @@ watch(
   () => {
     // 处理路由变化的逻辑
     const { uuid } = route.params as { uuid: string }
-    if (+uuid > 10)
+    if (+uuid > 15)
       router.replace({ name: 'Manifest' })
     pageUuid.value = uuid
   },

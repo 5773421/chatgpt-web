@@ -76,12 +76,12 @@ async function onConversation() {
 
   loading.value = true
   prompt.value = ''
-
-  let options: Chat.ConversationRequest = { systemMessage: featureCongis?.[+uuid - 1]?.systemMessage }
+  const systemMessage: any = featureCongis?.find(item => item.key === +uuid)?.systemMessage
+  let options: Chat.ConversationRequest = { systemMessage }
   const lastContext = conversationList.value[conversationList.value.length - 1]?.conversationOptions
 
   if (lastContext && usingContext.value)
-    options = { ...lastContext, systemMessage: featureCongis?.[+uuid - 1]?.systemMessage }
+    options = { ...lastContext, systemMessage }
 
   addChat(
     +uuid,

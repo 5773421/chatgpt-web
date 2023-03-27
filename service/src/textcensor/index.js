@@ -1,6 +1,6 @@
 const fs = require('fs')
 const paths = require('path')
-const path = paths.join(__dirname, 'keywords')
+const path = paths.join(__dirname, '../../keywords')
 const map = {}
 
 const lineReader = require('readline').createInterface({

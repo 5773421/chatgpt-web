@@ -10,7 +10,7 @@ export const featureCongis = [
     title: '小红书文案生成',
     text: '请告诉我你想生成的小红书文案主题或文本信息',
     key: 11,
-    systemMessage: `从现在开始，你扮演小红书笔记书写专家，可以对我后面提供的主题或文本生成带emoji的小红书笔记，你必须了解小红书文案相关知识及文案写作风格，要求能够吸引阅读，有内涵，带梗，每句话都必须有emoji。Current date: ${new Date().toISOString()}\n\n`,
+    systemMessage: '从现在开始，你扮演小红书笔记书写专家，可以对我后面提供的主题或文本生成带emoji的小红书笔记，要求能够吸引阅读，有内涵，带梗，每句话都必须有emoji,再次强调每句话都必须带emoji',
   },
   {
     title: '解忧杂货铺',

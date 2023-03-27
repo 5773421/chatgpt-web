@@ -1,8 +1,17 @@
 <script setup lang='ts'>
-import { NCard } from 'naive-ui'
+import { ref } from 'vue'
+import { NCard, NModal } from 'naive-ui'
 import { featureCongis } from '@/config/config'
 import { useBasicLayout } from '@/hooks/useBasicLayout'
+import Icon403 from '@/icons/403.vue'
 const { isMobile } = useBasicLayout()
+const visible = ref<boolean>(false)
+function onClick() {
+  visible.value = true
+}
+function cancel() {
+  visible.value = false
+}
 </script>
 
 <template>
@@ -15,6 +24,24 @@ const { isMobile } = useBasicLayout()
         </NCard>
       </router-link>
     </div>
+    <div class="flex justify-center mt-5 mb-5" @click="onClick">
+      关注公众号，了解更多玩法
+    </div>
+    <NModal :show="visible" style="width: 90%; max-width: 640px" :on-mask-click="cancel">
+      <div class="p-10 bg-white rounded dark:bg-slate-800">
+        <div class="space-y-4">
+          <header class="space-y-2">
+            <h2 class="text-2xl font-bold text-center text-slate-800 dark:text-neutral-200">
+              关注公众号
+            </h2>
+            <p class="text-base text-center text-slate-500 dark:text-slate-500">
+              关注公众号，了解更多玩法，后续也会更新接入siri、自行部署等教程。
+            </p>
+            <Icon403 class="w-[200px] m-auto" />
+          </header>
+        </div>
+      </div>
+    </NModal>
     <!-- </NLayout> -->
   </div>
 </template>

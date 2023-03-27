@@ -54,7 +54,7 @@ watch(
   <div class="h-full dark:bg-[#24272e] transition-all bg-gray-100" :class="[isMobile ? 'p-0' : 'p-0']">
     <div class="h-full overflow-hidden" :class="getMobileClass">
       <NLayout class="z-40 transition" :class="getContainerClass">
-        <NLayoutHeader class="p-4 absolute subpixel-antialiased bg-white z-50 w-full font-black text-3xl font-sans bg-opacity-60">
+        <NLayoutHeader class="fixed p-4 absolute subpixel-antialiased bg-white z-50 w-full font-black text-3xl font-sans bg-opacity-60">
           AI 沾沾
           <span class="text-2xl">{{ getTitle }}</span>
         </NLayoutHeader>
